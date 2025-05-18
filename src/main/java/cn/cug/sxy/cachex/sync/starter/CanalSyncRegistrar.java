@@ -1,7 +1,7 @@
-package cn.cug.sxy.shared.cache.redis_canal.starter;
+package cn.cug.sxy.cachex.sync.starter;
 
-import cn.cug.sxy.shared.cache.redis_canal.annotation.CanalSync;
-import cn.cug.sxy.shared.cache.redis_canal.annotation.EnableCanalRedisSync;
+import cn.cug.sxy.cachex.sync.annotation.CanalSync;
+import cn.cug.sxy.cachex.sync.annotation.EnableCanalRedisSync;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;

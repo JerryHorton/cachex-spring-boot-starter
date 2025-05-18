@@ -1,4 +1,4 @@
-package cn.cug.sxy.shared.cache.redis_canal.annotation;
+package cn.cug.sxy.cachex.sync.annotation;
 
 import java.lang.annotation.*;
 

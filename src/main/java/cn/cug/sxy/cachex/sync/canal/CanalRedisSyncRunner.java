@@ -1,15 +1,15 @@
-package cn.cug.sxy.shared.cache.redis_canal.canal;
+package cn.cug.sxy.cachex.sync.canal;
 
-import cn.cug.sxy.shared.cache.redis_canal.core.CanalSyncManager;
-import cn.cug.sxy.shared.cache.redis_canal.core.EntityBuilder;
-import cn.cug.sxy.shared.cache.redis_canal.core.TableSyncRule;
+import cn.cug.sxy.cachex.sync.core.CanalSyncManager;
+import cn.cug.sxy.cachex.sync.core.EntityBuilder;
+import cn.cug.sxy.cachex.sync.core.TableSyncRule;
+import cn.cug.sxy.cachex.sync.util.ColumnFieldConverter;
 import com.alibaba.otter.canal.protocol.CanalEntry.Column;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RedissonClient;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,16 +21,14 @@ import java.util.List;
  */
 
 @Slf4j
+@RequiredArgsConstructor
 public class CanalRedisSyncRunner {
 
-    @Resource
-    private CanalSyncManager syncManager;
+    private final CanalSyncManager syncManager;
 
-    @Resource
-    private EntityBuilder entityBuilder;
+    private final EntityBuilder entityBuilder;
 
-    @Resource
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     public void onRowChange(String dataBase, String table, List<Column> columns) {
         for (TableSyncRule rule : syncManager.getAllRules()) {
@@ -62,6 +60,7 @@ public class CanalRedisSyncRunner {
                 }
                 String cacheKey = rule.getRedisKeyPrefix() + idValue;
                 redissonClient.getBucket(cacheKey).delete();
+                log.info("同步完成，cacheKey: {}", cacheKey);
             }
         }
     }
@@ -70,7 +69,7 @@ public class CanalRedisSyncRunner {
         List<String> idValues = new ArrayList<>();
         for (String idField : idFields) {
             columns.stream()
-                    .filter(column -> column.getName().equalsIgnoreCase(idField))
+                    .filter(column -> ColumnFieldConverter.underlineToCamel(column.getName()).equalsIgnoreCase(idField))
                     .map(Column::getValue)
                     .findFirst().ifPresent(idValues::add);
         }

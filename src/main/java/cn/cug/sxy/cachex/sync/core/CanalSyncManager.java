@@ -1,4 +1,4 @@
-package cn.cug.sxy.shared.cache.redis_canal.core;
+package cn.cug.sxy.cachex.sync.core;
 
 import org.springframework.stereotype.Component;
 

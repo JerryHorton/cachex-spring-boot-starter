@@ -1,4 +1,4 @@
-package cn.cug.sxy.shared.cache.bloomFilter;
+package cn.cug.sxy.cachex.bloom.annotation;
 
 import java.lang.annotation.*;
 

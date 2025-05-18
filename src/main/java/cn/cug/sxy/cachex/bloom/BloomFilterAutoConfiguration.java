@@ -1,5 +1,8 @@
-package cn.cug.sxy.shared.cache.bloomFilter;
+package cn.cug.sxy.cachex.bloom;
 
+import cn.cug.sxy.cachex.bloom.config.BloomFilterProperties;
+import cn.cug.sxy.cachex.bloom.starter.BloomFilterBeanPostProcessor;
+import cn.cug.sxy.cachex.bloom.starter.BloomFilterRegistry;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

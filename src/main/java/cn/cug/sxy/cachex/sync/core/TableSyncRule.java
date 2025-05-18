@@ -1,7 +1,6 @@
-package cn.cug.sxy.shared.cache.redis_canal.core;
+package cn.cug.sxy.cachex.sync.core;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 

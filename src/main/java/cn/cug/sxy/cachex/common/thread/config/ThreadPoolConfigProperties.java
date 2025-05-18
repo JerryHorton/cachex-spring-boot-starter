@@ -1,10 +1,10 @@
-package cn.cug.sxy.config;
+package cn.cug.sxy.cachex.common.thread.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties(prefix = "thread.pool.executor.config", ignoreInvalidFields = true)
+@ConfigurationProperties(prefix = "cachex.thread.pool.executor.config", ignoreInvalidFields = true)
 public class ThreadPoolConfigProperties {
 
     /** 核心线程数 */

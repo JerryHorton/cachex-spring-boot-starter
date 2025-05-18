@@ -1,5 +1,6 @@
-package cn.cug.sxy.shared.cache.redis_canal.core;
+package cn.cug.sxy.cachex.sync.core;
 
+import cn.cug.sxy.cachex.sync.util.ColumnFieldConverter;
 import com.alibaba.otter.canal.protocol.CanalEntry.Column;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,7 @@ public class EntityBuilder {
         try {
             T instance = clazz.getDeclaredConstructor().newInstance();
             for (Column column : columns) {
-                String fieldName = underlineToCamel(column.getName());
+                String fieldName = ColumnFieldConverter.underlineToCamel(column.getName());
                 String value = column.getValue();
                 try {
                     Field field = clazz.getDeclaredField(fieldName);
@@ -51,20 +52,6 @@ public class EntityBuilder {
         if (type == Boolean.class || type == boolean.class) return Boolean.valueOf(value);
         if (type == Date.class) return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(value);
         return value;
-    }
-
-    private String underlineToCamel(String name) {
-        StringBuilder result = new StringBuilder();
-        boolean upper = false;
-        for (char c : name.toCharArray()) {
-            if (c == '_') {
-                upper = true;
-            } else {
-                result.append(upper ? Character.toUpperCase(c) : c);
-                upper = false;
-            }
-        }
-        return result.toString();
     }
 
 }

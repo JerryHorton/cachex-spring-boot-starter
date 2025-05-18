@@ -1,7 +1,7 @@
-package cn.cug.sxy.shared.cache.redis_canal.annotation;
+package cn.cug.sxy.cachex.sync.annotation;
 
-import cn.cug.sxy.shared.cache.redis_canal.CanalRedisSyncAutoConfiguration;
-import cn.cug.sxy.shared.cache.redis_canal.starter.CanalSyncRegistrar;
+import cn.cug.sxy.cachex.sync.CanalRedisSyncAutoConfiguration;
+import cn.cug.sxy.cachex.sync.starter.CanalSyncRegistrar;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

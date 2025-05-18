@@ -1,6 +1,6 @@
-package cn.cug.sxy.config;
+package cn.cug.sxy.cachex.common.thread;
 
-import lombok.extern.slf4j.Slf4j;
+import cn.cug.sxy.cachex.common.thread.config.ThreadPoolConfigProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,15 +9,14 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.concurrent.*;
 
-@Slf4j
 @EnableAsync
 @Configuration
 @EnableConfigurationProperties(ThreadPoolConfigProperties.class)
-public class ThreadPoolConfig {
+public class ThreadPoolAutoConfiguration {
 
-    @Bean
+    @Bean(name = "threadPoolExecutor")
     @ConditionalOnMissingBean(ThreadPoolExecutor.class)
-    public ThreadPoolExecutor threadPoolExecutor(ThreadPoolConfigProperties properties) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public ThreadPoolExecutor threadPoolExecutor(ThreadPoolConfigProperties properties) {
         // 实例化策略
         RejectedExecutionHandler handler;
         switch (properties.getPolicy()){

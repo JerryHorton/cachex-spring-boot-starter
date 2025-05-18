@@ -1,5 +1,7 @@
-package cn.cug.sxy.shared.cache.bloomFilter;
+package cn.cug.sxy.cachex.bloom.starter;
 
+import cn.cug.sxy.cachex.bloom.annotation.BloomFilter;
+import cn.cug.sxy.cachex.bloom.filter.RedisBloomFilter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
@@ -42,4 +44,10 @@ public class BloomFilterBeanPostProcessor implements BeanPostProcessor {
         }
         return bean;
     }
+
+    @Override
+    public Object postProcessAfterInitialization(Object o, String s) throws BeansException {
+        return o;
+    }
+
 }

@@ -1,5 +1,7 @@
-package cn.cug.sxy.shared.cache.bloomFilter;
+package cn.cug.sxy.cachex.bloom.starter;
 
+import cn.cug.sxy.cachex.bloom.config.BloomFilterProperties;
+import cn.cug.sxy.cachex.bloom.filter.RedisBloomFilter;
 import org.redisson.api.RedissonClient;
 
 import java.util.Map;

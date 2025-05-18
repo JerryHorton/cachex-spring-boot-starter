@@ -1,4 +1,4 @@
-package cn.cug.sxy.shared.cache.bloomFilter;
+package cn.cug.sxy.cachex.bloom.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -12,7 +12,7 @@ import java.util.Map;
  * @Author jerryhotton
  */
 
-@ConfigurationProperties(prefix = "redis.bloom")
+@ConfigurationProperties(prefix = "cachex.redis.bloom")
 public class BloomFilterProperties {
 
     private Map<String, FilterConfig> filters = new HashMap<>();

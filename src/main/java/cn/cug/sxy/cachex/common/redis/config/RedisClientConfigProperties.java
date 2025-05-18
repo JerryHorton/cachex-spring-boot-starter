@@ -1,4 +1,4 @@
-package cn.cug.sxy.config;
+package cn.cug.sxy.cachex.common.redis.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 
 @Data
-@ConfigurationProperties(prefix = "redis.sdk.config", ignoreInvalidFields = true)
+@ConfigurationProperties(prefix = "cachex.redis.sdk.config", ignoreInvalidFields = true)
 public class RedisClientConfigProperties {
 
     /** host:ip */

@@ -1,11 +1,12 @@
-package cn.cug.sxy.shared.cache.redis_canal;
+package cn.cug.sxy.cachex.sync;
 
-import cn.cug.sxy.shared.cache.redis_canal.canal.CanalRedisSyncRunner;
-import cn.cug.sxy.shared.cache.redis_canal.config.CanalClientProperties;
-import cn.cug.sxy.shared.cache.redis_canal.core.CanalSyncManager;
-import cn.cug.sxy.shared.cache.redis_canal.core.EntityBuilder;
-import cn.cug.sxy.shared.cache.redis_canal.listener.CanalClientListener;
-import cn.cug.sxy.shared.cache.redis_canal.starter.CanalSyncRegistrar;
+import cn.cug.sxy.cachex.sync.canal.CanalRedisSyncRunner;
+import cn.cug.sxy.cachex.sync.config.CanalClientProperties;
+import cn.cug.sxy.cachex.sync.core.CanalSyncManager;
+import cn.cug.sxy.cachex.sync.core.EntityBuilder;
+import cn.cug.sxy.cachex.sync.listener.CanalClientListener;
+import cn.cug.sxy.cachex.sync.starter.CanalSyncRegistrar;
+import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -20,7 +21,7 @@ import org.springframework.context.annotation.Bean;
  */
 
 @AutoConfiguration
-@ConditionalOnClass(CanalSyncRegistrar.class)
+@ConditionalOnClass({CanalSyncRegistrar.class, RedissonClient.class})
 @EnableConfigurationProperties(CanalClientProperties.class)
 public class CanalRedisSyncAutoConfiguration {
 
@@ -38,8 +39,8 @@ public class CanalRedisSyncAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public CanalRedisSyncRunner canalRedisSyncRunner() {
-        return new CanalRedisSyncRunner();
+    public CanalRedisSyncRunner canalRedisSyncRunner(CanalSyncManager syncManager, EntityBuilder entityBuilder, RedissonClient redissonClient) {
+        return new CanalRedisSyncRunner(syncManager, entityBuilder, redissonClient);
     }
 
     @Bean

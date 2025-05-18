@@ -1,9 +1,7 @@
-package cn.cug.sxy.shared.cache.redis_canal.config;
+package cn.cug.sxy.cachex.sync.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import java.util.List;
 
 /**
  * @version 1.0
@@ -14,13 +12,13 @@ import java.util.List;
 
 
 @Data
-@ConfigurationProperties(prefix = "canal.client")
+@ConfigurationProperties(prefix = "cachex.canal.client")
 public class CanalClientProperties {
 
     /**
      * Canal Server 地址
      */
-    private String host = "127.0.0.1";
+    private String host;
     /**
      * Canal Server 端口
      */

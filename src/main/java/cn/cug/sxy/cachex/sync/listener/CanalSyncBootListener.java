@@ -1,9 +1,9 @@
-package cn.cug.sxy.shared.cache.redis_canal.listener;
+package cn.cug.sxy.cachex.sync.listener;
 
-import cn.cug.sxy.shared.cache.redis_canal.annotation.CanalSync;
-import cn.cug.sxy.shared.cache.redis_canal.core.CanalSyncManager;
-import cn.cug.sxy.shared.cache.redis_canal.core.TableSyncRule;
-import cn.cug.sxy.shared.cache.redis_canal.starter.CanalSyncRegistrar;
+import cn.cug.sxy.cachex.sync.annotation.CanalSync;
+import cn.cug.sxy.cachex.sync.core.CanalSyncManager;
+import cn.cug.sxy.cachex.sync.core.TableSyncRule;
+import cn.cug.sxy.cachex.sync.starter.CanalSyncRegistrar;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package cn.cug.sxy.shared.cache.bloomFilter;
+package cn.cug.sxy.cachex.bloom.filter;
 
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
