@@ -1,0 +1,80 @@
+package cn.cug.sxy.shared.cache.redis_canal.canal;
+
+import cn.cug.sxy.shared.cache.redis_canal.core.CanalSyncManager;
+import cn.cug.sxy.shared.cache.redis_canal.core.EntityBuilder;
+import cn.cug.sxy.shared.cache.redis_canal.core.TableSyncRule;
+import com.alibaba.otter.canal.protocol.CanalEntry.Column;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RedissonClient;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @version 1.0
+ * @Date 2025/5/16 20:07
+ * @Description Canal监听核心
+ * @Author jerryhotton
+ */
+
+@Slf4j
+public class CanalRedisSyncRunner {
+
+    @Resource
+    private CanalSyncManager syncManager;
+
+    @Resource
+    private EntityBuilder entityBuilder;
+
+    @Resource
+    private RedissonClient redissonClient;
+
+    public void onRowChange(String dataBase, String table, List<Column> columns) {
+        for (TableSyncRule rule : syncManager.getAllRules()) {
+            if (rule.match(dataBase, table)) {
+                Object entity = entityBuilder.build(columns, rule.getClazz());
+                if (null == entity) {
+                    log.warn("实体构建失败，跳过同步");
+                    continue;
+                }
+                String idValue = getIdValue(columns, rule.getIdField());
+                if (StringUtils.isBlank(idValue)) {
+                    log.warn("未找到主键值，跳过同步");
+                    continue;
+                }
+                String cacheKey = rule.getRedisKeyPrefix() + idValue;
+                redissonClient.getBucket(cacheKey).set(entity);
+                log.info("同步完成，cacheKey: {}", cacheKey);
+            }
+        }
+    }
+
+    public void onRowDelete(String dataBase, String table, List<Column> columns) {
+        for (TableSyncRule rule : syncManager.getAllRules()) {
+            if (rule.match(dataBase, table)) {
+                String idValue = getIdValue(columns, rule.getIdField());
+                if (StringUtils.isBlank(idValue)) {
+                    log.warn("未找到主键值，跳过同步");
+                    continue;
+                }
+                String cacheKey = rule.getRedisKeyPrefix() + idValue;
+                redissonClient.getBucket(cacheKey).delete();
+            }
+        }
+    }
+
+    private String getIdValue(List<Column> columns, List<String> idFields) {
+        List<String> idValues = new ArrayList<>();
+        for (String idField : idFields) {
+            columns.stream()
+                    .filter(column -> column.getName().equalsIgnoreCase(idField))
+                    .map(Column::getValue)
+                    .findFirst().ifPresent(idValues::add);
+        }
+        return String.join("_", idValues);
+    }
+
+}
