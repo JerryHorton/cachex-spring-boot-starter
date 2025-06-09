@@ -2,7 +2,9 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 cn.cug.sxy.cachex.bloom.BloomFilterAutoConfiguration,\
 cn.cug.sxy.cachex.guard.RedisGuardAutoConfiguration,\
 cn.cug.sxy.cachex.sync.CanalRedisSyncAutoConfiguration,\
+cn.cug.sxy.cachex.luascript.LuaScriptManagerAutoConfiguration,\
 cn.cug.sxy.cachex.common.thread.ThreadPoolAutoConfiguration,\
 cn.cug.sxy.cachex.common.redis.RedisClientAutoConfiguration
+
 
 
